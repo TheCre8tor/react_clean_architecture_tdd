@@ -1,3 +1,3 @@
-class ServerException extends Error {}
+export class ServerException extends Error {}
 
-class CacheException extends Error {}
+export class CacheException extends Error {}
