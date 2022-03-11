@@ -5,7 +5,7 @@
   "tasks": [
     {
       "type": "typescript",
-      "tsconfig": "simple-typescript-starter/tsconfig.json",
+      "tsconfig": "react_clean_architecture_tdd/tsconfig.json",
       "problemMatcher": ["$tsc"]
     }
   ]
