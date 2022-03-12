@@ -5,8 +5,7 @@ import {
 } from '../../../../../src/features/number_trivia/domain/usecases/get_random_number_trivia';
 import { NumberTriviaRepository } from './../../../../../src/features/number_trivia/domain/repositories/number_trivia_repository';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MockGetRandomNumberTrivia<T> = { [K in keyof T]: jest.Mock<any, any> };
+type MockGetRandomNumberTrivia<T> = { [K in keyof T]: jest.Mock };
 
 const mockGetRandomNumberTrivia: MockGetRandomNumberTrivia<NumberTriviaRepository> =
   { getConcreteNumberTrivia: jest.fn(), getRandomNumber: jest.fn() };
