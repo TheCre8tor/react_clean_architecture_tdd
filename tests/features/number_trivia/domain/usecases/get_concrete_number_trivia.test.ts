@@ -25,7 +25,7 @@ describe('GetConcreteNumberTrivia', () => {
     mockConcreteNumberTrivia.getConcreteNumberTrivia.mockReturnValue(
       numberTrivia,
     );
-    let usecase = new GetConcreteNumberTrivia(mockConcreteNumberTrivia);
+    const usecase = new GetConcreteNumberTrivia(mockConcreteNumberTrivia);
 
     let result = await usecase.call(new Params(1));
 
