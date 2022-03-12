@@ -1,4 +1,4 @@
-import { Failure } from '../../../../core/error/failure';
+import { Failure } from '../../../../core/error/failures/failure';
 import { NumberTrivia } from '../entities/number_trivia';
 
 export type EitherResponse = Failure | NumberTrivia;

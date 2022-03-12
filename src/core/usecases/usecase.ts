@@ -1,4 +1,4 @@
-import { Failure } from '../error/failure';
+import { Failure } from '../error/failures/failure';
 
 type UseCaseType<T> = Failure | T;
 
