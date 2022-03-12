@@ -5,7 +5,7 @@ import {
   Params,
 } from './../../../../../src/features/number_trivia/domain/usecases/get_concrete_number_trivia';
 
-type MockConcreteNumberTrivia<T> = { [K in keyof T]: jest.Mock<any, any> };
+type MockConcreteNumberTrivia<T> = { [K in keyof T]: jest.Mock };
 
 const mockConcreteNumberTrivia: MockConcreteNumberTrivia<NumberTriviaRepository> =
   {
