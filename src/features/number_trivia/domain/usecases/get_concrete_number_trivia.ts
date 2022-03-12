@@ -1,21 +1,14 @@
-import { Failure } from '../../../../core/error/failure';
+import { UseCase } from './../../../../core/usecases/usecase';
 import { NumberTrivia } from '../entities/number_trivia';
 import {
   EitherResponse,
   NumberTriviaRepository,
 } from '../repositories/number_trivia_repository';
 
-type UseCaseType<T> = Failure | T;
-
-abstract class UseCase<T, P> {
-  abstract call(params: P): UseCaseType<T>;
-}
-
-export class GetConcreteNumberTrivia extends UseCase<NumberTrivia, Params> {
+export class GetConcreteNumberTrivia implements UseCase<NumberTrivia, Params> {
   private repository: NumberTriviaRepository;
 
   constructor(repository: NumberTriviaRepository) {
-    super();
     this.repository = repository;
   }
 
@@ -24,6 +17,10 @@ export class GetConcreteNumberTrivia extends UseCase<NumberTrivia, Params> {
   }
 }
 
-export interface Params {
+export class Params {
   number: number;
+
+  constructor(number: number) {
+    this.number = number;
+  }
 }

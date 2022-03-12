@@ -5,5 +5,5 @@ export type EitherResponse = Failure | NumberTrivia;
 
 export abstract class NumberTriviaRepository {
   abstract getConcreteNumberTrivia(number: number): EitherResponse;
-  abstract getRandomNumber(): void;
+  abstract getRandomNumber(): EitherResponse;
 }
