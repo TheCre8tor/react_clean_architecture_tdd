@@ -7,7 +7,7 @@ import {
 
 type MockConcreteNumberTrivia<T> = { [K in keyof T]: jest.Mock<any, any> };
 
-let mockConcreteNumberTrivia: MockConcreteNumberTrivia<NumberTriviaRepository> =
+const mockConcreteNumberTrivia: MockConcreteNumberTrivia<NumberTriviaRepository> =
   {
     getConcreteNumberTrivia: jest.fn(),
     getRandomNumber: jest.fn(),
@@ -27,7 +27,7 @@ describe('GetConcreteNumberTrivia', () => {
     );
     const usecase = new GetConcreteNumberTrivia(mockConcreteNumberTrivia);
 
-    let result = await usecase.call(new Params(1));
+    const result = await usecase.call(new Params(1));
 
     expect(result).toEqual<NumberTrivia>(numberTrivia);
     expect(mockConcreteNumberTrivia.getConcreteNumberTrivia).toBeCalledWith(1);
