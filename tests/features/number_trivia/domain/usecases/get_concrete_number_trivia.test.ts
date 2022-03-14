@@ -1,3 +1,4 @@
+import { Right } from '../../../../../src/core/utils/Either';
 import { NumberTrivia } from './../../../../../src/features/number_trivia/domain/entities/number_trivia';
 import { NumberTriviaRepository } from './../../../../../src/features/number_trivia/domain/repositories/number_trivia_repository';
 import {
@@ -23,13 +24,14 @@ describe('GetConcreteNumberTrivia', () => {
 
   test('should get trivia for the number from the repository', async () => {
     mockConcreteNumberTrivia.getConcreteNumberTrivia.mockReturnValue(
-      numberTrivia,
+      new Right(numberTrivia),
     );
     const usecase = new GetConcreteNumberTrivia(mockConcreteNumberTrivia);
 
     const result = await usecase.call(new Params(1));
 
-    expect(result).toEqual<NumberTrivia>(numberTrivia);
+    expect(result).toStrictEqual(new Right(numberTrivia));
+    expect(result.isRight()).toBeTruthy();
     expect(mockConcreteNumberTrivia.getConcreteNumberTrivia).toBeCalledWith(1);
     expect(mockConcreteNumberTrivia.getConcreteNumberTrivia).toBeCalledTimes(1);
   });

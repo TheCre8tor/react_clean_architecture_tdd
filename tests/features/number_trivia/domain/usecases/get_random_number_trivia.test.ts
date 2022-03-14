@@ -1,3 +1,4 @@
+import { Right } from '../../../../../src/core/utils/Either';
 import { NumberTrivia } from '../../../../../src/features/number_trivia/domain/entities/number_trivia';
 import {
   GetRandomNumberTrivia,
@@ -17,12 +18,15 @@ describe('GetRandomNumberTrivia', () => {
   };
 
   test('should get trivia from the repository', async () => {
-    mockGetRandomNumberTrivia.getRandomNumber.mockReturnValue(numberTrivia);
+    mockGetRandomNumberTrivia.getRandomNumber.mockReturnValue(
+      new Right(numberTrivia),
+    );
     const usecase = new GetRandomNumberTrivia(mockGetRandomNumberTrivia);
 
     const result = await usecase.call(new NoParams());
 
-    expect(result).toBe<NumberTrivia>(numberTrivia);
+    expect(result).toStrictEqual(new Right(numberTrivia));
+    expect(result.isRight()).toBeTruthy();
     expect(mockGetRandomNumberTrivia.getRandomNumber).toBeCalledTimes(1);
     expect(mockGetRandomNumberTrivia.getRandomNumber).toBeCalledWith();
   });

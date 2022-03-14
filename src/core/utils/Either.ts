@@ -31,3 +31,11 @@ export class Right<L, R> {
     return true;
   }
 }
+
+// export const left = <L, R>(l: L): Either<L, R> => {
+//   return new Left(l);
+// };
+
+// export const right = <L, R>(r: R): Right<L, R> => {
+//   return new Right(r);
+// };
