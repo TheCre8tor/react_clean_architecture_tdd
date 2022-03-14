@@ -1,9 +1,8 @@
+import { Failure } from '../../../../core/error/failure';
 import { UseCase } from '../../../../core/usecases/usecase';
+import { Either } from '../../../../core/utils/Either';
 import { NumberTrivia } from '../entities/number_trivia';
-import {
-  EitherResponse,
-  NumberTriviaRepository,
-} from '../repositories/number_trivia_repository';
+import { NumberTriviaRepository } from '../repositories/number_trivia_repository';
 
 export class GetRandomNumberTrivia implements UseCase<NumberTrivia, NoParams> {
   repository: NumberTriviaRepository;
@@ -12,7 +11,7 @@ export class GetRandomNumberTrivia implements UseCase<NumberTrivia, NoParams> {
     this.repository = repository;
   }
 
-  async call(params: NoParams): Promise<EitherResponse> {
+  async call(params: NoParams): Promise<Either<Failure, NumberTrivia>> {
     return await this.repository.getRandomNumber();
   }
 }
