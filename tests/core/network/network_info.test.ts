@@ -18,7 +18,6 @@ describe('isConnected', () => {
   test('should mock is-online libary wrapper and return espected result', async () => {
     const mockInternetChecker: MockInternetChecker<IsOnlineWrapper> = {
       hasConnection: jest.fn(),
-      query: jest.fn(),
     };
     mockInternetChecker.hasConnection.mockReturnValue(true);
     const networkInfo = new NetworkInfoImpl(mockInternetChecker);
