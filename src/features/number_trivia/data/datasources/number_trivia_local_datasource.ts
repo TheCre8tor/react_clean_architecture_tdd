@@ -8,5 +8,7 @@ abstract class NumberTriviaLocalDataSource {
    * @throws { CacheException } if no cached data is presented
    */
   abstract getLastNumberTrivia(): Promise<NumberTriviaModel>;
-  abstract cacheNumberTrivia(trivia: NumberTriviaModel): void;
+  abstract cacheNumberTrivia(trivia: NumberTriviaModel): Promise<void>;
 }
+
+export default NumberTriviaLocalDataSource;

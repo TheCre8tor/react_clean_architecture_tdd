@@ -5,6 +5,6 @@ import { NumberTrivia } from '../entities/number_trivia';
 export abstract class NumberTriviaRepository {
   abstract getConcreteNumberTrivia(
     number: number,
-  ): Either<Failure, NumberTrivia>;
-  abstract getRandomNumber(): Either<Failure, NumberTrivia>;
+  ): Promise<Either<Failure, NumberTrivia>>;
+  abstract getRandomNumber(): Promise<Either<Failure, NumberTrivia>>;
 }
