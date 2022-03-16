@@ -69,5 +69,32 @@ describe('getConcreteNumberTrivia', () => {
       expect(mockRemoteDataSource.getConcreteNumberTrivia).toBeCalledWith(1);
       expect(result).toStrictEqual(new Right(testNumberTrivia));
     });
+
+    test('should cache the data locally when the call to remote data source is successful', async () => {
+      mockRemoteDataSource.getConcreteNumberTrivia.mockReturnValue(
+        testNumberTriviaModel,
+      );
+
+      mockLocalDataSource.cacheNumberTrivia.mockReturnValue(Promise.resolve());
+      mockNetworkInfo.isConnected.mockReturnValue(true);
+
+      await repository.getConcreteNumberTrivia(testNumber);
+
+      expect(mockRemoteDataSource.getConcreteNumberTrivia).toBeCalledWith(1);
+    });
+
+    test.todo(
+      'should return server failure when the call to remote data source is unsuccessful',
+    );
+  });
+
+  describe('device is offline', () => {
+    test.todo(
+      'should return last locally cached data when the cached data is present',
+    );
+
+    test.todo(
+      'should return CacheFailure when there is no cached data present',
+    );
   });
 });
