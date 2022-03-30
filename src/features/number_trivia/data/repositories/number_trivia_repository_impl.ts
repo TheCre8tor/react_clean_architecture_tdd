@@ -1,5 +1,6 @@
 import {
   CacheException,
+  // CacheException,
   ServerException,
 } from '../../../../core/error/exception';
 import { Failure } from '../../../../core/error/failure';
@@ -46,7 +47,7 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
         const localTrivia = await this.localDataSource.getLastNumberTrivia();
         return new Right(localTrivia);
       } catch (err) {
-        console.log('');
+        throw new Left(new CacheException());
       }
     }
 

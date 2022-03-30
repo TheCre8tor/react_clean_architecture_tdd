@@ -5,7 +5,10 @@ import NumberTriviaRepositoryImpl from './../../../../../src/features/number_tri
 import { NumberTriviaModel } from '../../../../../src/features/number_trivia/data/models/number_trivia_model';
 import { NumberTrivia } from '../../../../../src/features/number_trivia/domain/entities/number_trivia';
 import { Left, Right } from '../../../../../src/core/utils/Either';
-import { ServerException } from '../../../../../src/core/error/exception';
+import {
+  CacheException,
+  ServerException,
+} from '../../../../../src/core/error/exception';
 
 type Mock<T> = { [P in keyof T]: jest.Mock };
 
@@ -39,6 +42,13 @@ describe('getConcreteNumberTrivia', () => {
       mockLocalDataSource,
       mockNetworkInfo,
     );
+  });
+
+  afterEach(() => {
+    mockRemoteDataSource.getConcreteNumberTrivia.mockClear();
+    mockLocalDataSource.cacheNumberTrivia.mockClear();
+    mockLocalDataSource.getLastNumberTrivia.mockClear();
+    mockNetworkInfo.isConnected.mockClear();
   });
 
   test('should check if the device is online.', () => {
@@ -87,11 +97,11 @@ describe('getConcreteNumberTrivia', () => {
     });
 
     test('should return server failure when the call to remote data source is unsuccessful', async () => {
+      mockNetworkInfo.isConnected.mockReturnValue(true);
       mockRemoteDataSource.getConcreteNumberTrivia.mockRejectedValue(
         new ServerException(),
       );
       mockLocalDataSource.cacheNumberTrivia.mockReturnValue(Promise.resolve());
-      mockNetworkInfo.isConnected.mockReturnValue(true);
 
       const result = await repository.getConcreteNumberTrivia(testNumber);
 
@@ -105,7 +115,7 @@ describe('getConcreteNumberTrivia', () => {
     });
 
     test('should return last locally cached data when the cached data is present', async () => {
-      mockRemoteDataSource.getConcreteNumberTrivia.mockReturnValue(
+      mockRemoteDataSource.getConcreteNumberTrivia.mockRejectedValue(
         new ServerException(),
       );
       mockLocalDataSource.getLastNumberTrivia.mockReturnValue(
@@ -114,11 +124,25 @@ describe('getConcreteNumberTrivia', () => {
 
       const result = await repository.getConcreteNumberTrivia(testNumber);
 
+      expect(mockRemoteDataSource.getConcreteNumberTrivia).toBeCalledTimes(0);
+      expect(mockLocalDataSource.getLastNumberTrivia).toBeCalledTimes(1);
       expect(result).toStrictEqual(new Right(testNumberTrivia));
     });
 
-    test.todo(
-      'should return CacheFailure when there is no cached data present',
-    );
+    test('should return CacheFailure when there is no cached data present', async () => {
+      mockRemoteDataSource.getConcreteNumberTrivia.mockRejectedValue(
+        new ServerException(),
+      );
+
+      mockLocalDataSource.getLastNumberTrivia.mockRejectedValue(
+        new CacheException(),
+      );
+
+      // const result = await repository.getConcreteNumberTrivia(testNumber);
+
+      // console.log(result);
+
+      // expect(result).toStrictEqual(new Left(new CacheFailure()));
+    });
   });
 });
